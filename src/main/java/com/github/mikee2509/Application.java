@@ -22,7 +22,7 @@ public class Application {
         Index index = new Index();
         Engine engine = new Engine(index);
 
-        FileReader fileReader = null;
+        FileReader fileReader;
         try {
             fileReader = new FileReader(args[0]);
         } catch (FileNotFoundException e) {
@@ -36,18 +36,21 @@ public class Application {
         System.out.println(index + "\n");
 
         Scanner in = new Scanner(System.in);
-        while (true) {
-            System.out.print("Enter query string: ");
-            String query = in.nextLine();
-            final List<DocumentResult> results = engine.search(query);
-            if (results.isEmpty()) {
-                System.out.println("Not found\n");
-            } else {
-                final String docs = results.stream()
-                    .map(res -> "document " + res.getDocNumber())
-                    .collect(Collectors.joining(", "));
-                System.out.print("Result: [" + docs + "]\n\n");
+        try {
+            while (true) {
+                System.out.print("Enter search query: ");
+                String query = in.nextLine();
+                final List<DocumentResult> results = engine.search(query);
+                if (results.isEmpty()) {
+                    System.out.println("Not found\n");
+                } else {
+                    final String docs = results.stream()
+                        .map(res -> "document " + res.getDocNumber())
+                        .collect(Collectors.joining(", "));
+                    System.out.print("Result: [" + docs + "]\n\n");
+                }
             }
+        } catch (Exception ignored) {
         }
     }
 }
