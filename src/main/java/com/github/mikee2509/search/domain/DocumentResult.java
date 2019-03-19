@@ -17,7 +17,15 @@ public class DocumentResult {
         return docNumber;
     }
 
+    public List<Integer> getQueryPositions() {
+        return queryPositions;
+    }
+
     public void addPosition(int position) {
         queryPositions.add(position);
+    }
+
+    public int getRowCount() {
+        return queryPositions.size();
     }
 }
